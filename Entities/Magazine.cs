@@ -22,4 +22,10 @@ public class Magazine
     
     [Column(name:"publication_year")]
     public int PublicationYear { get; set; }
+
+    public override string ToString()
+    {
+        return $"{nameof(Id)}: {Id}, {nameof(Code)}: {Code}, {nameof(Title)}: {Title}, " +
+               $"{nameof(PublishingPeriod)}: {PublishingPeriod}, {nameof(PublicationYear)}: {PublicationYear}";
+    }
 }

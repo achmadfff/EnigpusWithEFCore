@@ -14,10 +14,18 @@ public class NovelUi : INovelUi
 
     public void GetNovel()
     {
-        var novels = _novelService.GetAllNovel();
-        foreach (var novel in novels)
+        try
         {
-            Console.WriteLine(novel);
+            var novels = _novelService.GetAllNovel();
+            foreach (var novel in novels)
+            {
+                Console.WriteLine(novel);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 
@@ -27,18 +35,18 @@ public class NovelUi : INovelUi
         {
             var titleNovel = Input("Enter Title of The Novel: ", s => s.Length < 50);
             var publisherNovel = Input("Enter Publisher of The Novel: ", s => s.Length < 50);
-            var authorNovel = Input("Enter Author of The Novel: ", s =>  s.Length < 50);
+            var authorNovel = Input("Enter Author of The Novel: ", s => s.Length < 50);
             var publicationYearNovel = Input("Enter Publication Year of The Novel: ", s => int.TryParse(s, out _));
             var novelAdd = new Novel
             {
-                Code = null,
+                Code = "",
                 Title = titleNovel,
                 Publisher = publisherNovel,
                 PublicationYear = int.Parse(publicationYearNovel),
                 Author = authorNovel
             };
             _novelService.AddNovel(novelAdd);
-            
+
             Console.WriteLine("Create Success!");
         }
         catch (Exception e)
@@ -65,30 +73,54 @@ public class NovelUi : INovelUi
 
     public void SearchById()
     {
-        var id = Input("Enter Id of The Novel: ", s => int.TryParse(s, out _));
-        var novel = _novelService.SearchNovelById(id);
-        Console.WriteLine(novel);
+        try
+        {
+            var id = Input("Enter Id of The Novel: ", s => int.TryParse(s, out _));
+            var novel = _novelService.SearchNovelById(id);
+            Console.WriteLine(novel);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public void UpdateNovel()
     {
-        var id = Input("Enter Id of The Novel: ", s => int.TryParse(s, out _));
-        var novelToUpdate = _novelService.SearchNovelById(id);
-        var newTitle = Input("Enter New Title of The Novel: ");
-        var newPublisher = Input("Enter New Publisher of The Novel: ");
-        var newPublicationYear = Input("Enter New Publication Year of The Novel: ");
-        var newAuthor = Input("Enter New Author of The Novel: ");
-        
-        _novelService.UpdateNovel(novelToUpdate,newTitle,newPublisher,newPublicationYear,newAuthor);
+        try
+        {
+            var id = Input("Enter Id of The Novel: ", s => int.TryParse(s, out _));
+            var novelToUpdate = _novelService.SearchNovelById(id);
+            var newTitle = Input("Enter New Title of The Novel: ");
+            var newPublisher = Input("Enter New Publisher of The Novel: ");
+            var newPublicationYear = Input("Enter New Publication Year of The Novel: ");
+            var newAuthor = Input("Enter New Author of The Novel: ");
 
-        Console.WriteLine("Update Success!!");
+            _novelService.UpdateNovel(novelToUpdate, newTitle, newPublisher, newPublicationYear, newAuthor);
+
+            Console.WriteLine("Update Success!!");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public void DeleteNovel()
     {
-        var id = Input("Enter Id of The Novel: ", s => int.TryParse(s, out _));
-        _novelService.DeleteById(id);
-        Console.WriteLine("Delete Success!!");
+        try
+        {
+            var id = Input("Enter Id of The Novel: ", s => int.TryParse(s, out _));
+            _novelService.DeleteById(id);
+            Console.WriteLine("Delete Success!!");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public static string Input(string info, Func<string, bool> validate)
@@ -101,6 +133,7 @@ public class NovelUi : INovelUi
             return input;
         }
     }
+
     public static string Input(string info)
     {
         Console.Write($"{info} : ");

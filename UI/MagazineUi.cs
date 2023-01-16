@@ -14,6 +14,7 @@ public class MagazineUi : IMagazineUi
 
     public void GetMagazine()
     {
+        Console.WriteLine("======================= Magazine =======================");
         var magazines = _magazineService.GetAllMagazine();
         foreach (var magazine in magazines)
         {

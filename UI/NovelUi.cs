@@ -16,6 +16,7 @@ public class NovelUi : INovelUi
     {
         try
         {
+            Console.WriteLine("========================= NOVEL =========================");
             var novels = _novelService.GetAllNovel();
             foreach (var novel in novels)
             {
